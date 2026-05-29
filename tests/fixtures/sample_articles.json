@@ -1,0 +1,26 @@
+[
+  {
+    "title": "OpenAI releases new model with improved reasoning",
+    "url": "https://openai.com/blog/new-model",
+    "source": "Hacker News",
+    "published_at": null,
+    "hn_id": "12345678",
+    "hn_score_raw": 420
+  },
+  {
+    "title": "Google announces new quantum computing milestone",
+    "url": "https://blog.google/technology/quantum-milestone",
+    "source": "Hacker News",
+    "published_at": null,
+    "hn_id": "12345680",
+    "hn_score_raw": 310
+  },
+  {
+    "title": "Apple unveils next-generation chip architecture",
+    "url": "https://techcrunch.com/apple-chip",
+    "source": "TechCrunch",
+    "published_at": null,
+    "hn_id": null,
+    "hn_score_raw": null
+  }
+]

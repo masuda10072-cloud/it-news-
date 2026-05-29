@@ -1,0 +1,32 @@
+{
+  "hits": [
+    {
+      "title": "OpenAI releases new model with improved reasoning",
+      "url": "https://openai.com/blog/new-model",
+      "objectID": "12345678",
+      "points": 420,
+      "created_at": "2026-05-29T00:00:00Z",
+      "num_comments": 210
+    },
+    {
+      "title": "Show HN: I built a self-hosted AI news aggregator",
+      "url": "https://github.com/example/ai-news",
+      "objectID": "12345679",
+      "points": 185,
+      "created_at": "2026-05-29T01:00:00Z",
+      "num_comments": 78
+    },
+    {
+      "title": "Google announces new quantum computing milestone",
+      "url": "https://blog.google/technology/quantum-milestone",
+      "objectID": "12345680",
+      "points": 310,
+      "created_at": "2026-05-29T02:00:00Z",
+      "num_comments": 145
+    }
+  ],
+  "nbHits": 3,
+  "page": 0,
+  "nbPages": 1,
+  "hitsPerPage": 30
+}

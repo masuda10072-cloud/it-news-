@@ -1,0 +1,51 @@
+name: 📰 IT ニュース新聞 自動生成
+
+on:
+  schedule:
+    # UTC 22:00 = JST 07:00 に毎日実行
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+    # GitHub Actions 画面から手動実行も可能
+
+jobs:
+  generate-news:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # outputs/ への git commit に必要
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Python 3.11 をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: 依存パッケージをインストール
+        run: pip install -r requirements.txt
+
+      - name: IT ニュース新聞を生成
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USER_AGENT: ${{ secrets.REDDIT_USER_AGENT }}
+          GOOGLE_CHAT_WEBHOOK_URL: ${{ secrets.GOOGLE_CHAT_WEBHOOK_URL }}
+          # GitHub Pages URL を自動構築（リポジトリ名から生成）
+          GITHUB_PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: python main.py
+
+      - name: 生成した新聞を Git コミット & プッシュ
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add outputs/
+          # 変更がない場合はコミットしない
+          git diff --cached --quiet && echo "変更なし。コミットをスキップ。" || (
+            git commit -m "📰 IT ニュース新聞 $(date +'%Y-%m-%d')" &&
+            git push
+          )
