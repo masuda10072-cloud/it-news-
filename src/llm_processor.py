@@ -8,7 +8,11 @@ import json
 import logging
 import os
 import re
+import time
 from typing import Optional
+
+# 429 エラー時のリトライ設定（待機秒数）
+_RETRY_DELAYS = [30, 60]
 
 logger = logging.getLogger(__name__)
 
@@ -84,8 +88,9 @@ def _keyword_category(title: str) -> str:
     return "ITビジネス・その他"
 
 
-def _fallback_process(articles: list[dict]) -> list[dict]:
+def _fallback_process(articles: list[dict], rate_limited: bool = False) -> list[dict]:
     """Gemini API 失敗時: キーワードベースでIT判定のみ行う（翻訳・要約なし）"""
+    reason = "APIレート制限" if rate_limited else "APIキー未設定またはエラー"
     processed = []
     for article in articles:
         title_lower = article["title"].lower()
@@ -99,9 +104,11 @@ def _fallback_process(articles: list[dict]) -> list[dict]:
                 "category": _keyword_category(article["title"]),
                 "title_ja": "",
                 "summary_ja": "",
+                "llm_ok": False,
+                "llm_fail_reason": reason,
             }
         )
-    logger.info("フォールバック処理: %d件 → IT関連 %d件", len(articles), len(processed))
+    logger.info("フォールバック処理 (%s): %d件 → IT関連 %d件", reason, len(articles), len(processed))
     return processed
 
 
@@ -142,36 +149,58 @@ Return ONLY the raw JSON array. No markdown fences, no explanation.
 Articles:
 {articles_input}"""
 
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-        )
-        results = _extract_json(response.text)
-        if results is None:
-            raise ValueError("JSON配列の抽出に失敗しました")
-
-        result_map = {r["id"]: r for r in results if isinstance(r, dict)}
-        processed = []
-        for i, article in enumerate(articles):
-            llm = result_map.get(i, {})
-            if not llm.get("is_it"):
-                continue
-            processed.append(
-                {
-                    **article,
-                    "category": llm.get("category") or _keyword_category(article["title"]),
-                    "title_ja": llm.get("title_ja") or "",
-                    "summary_ja": llm.get("summary_ja") or "",
-                }
+    # リトライループ（最大3回: 初回 + 2回リトライ）
+    last_error: Optional[Exception] = None
+    for attempt, wait_sec in enumerate([0] + _RETRY_DELAYS):
+        if wait_sec > 0:
+            logger.warning(
+                "Gemini API 制限のため %d秒待機してリトライします... (%d/%d)",
+                wait_sec, attempt, len(_RETRY_DELAYS),
             )
+            time.sleep(wait_sec)
 
-        logger.info("Gemini処理完了: %d件 → IT関連 %d件", len(articles), len(processed))
-        return processed
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+            )
+            results = _extract_json(response.text)
+            if results is None:
+                raise ValueError("JSON配列の抽出に失敗しました")
 
-    except Exception as e:
-        logger.error("Gemini処理エラー: %s。フォールバックを使用します。", e)
-        return _fallback_process(articles)
+            result_map = {r["id"]: r for r in results if isinstance(r, dict)}
+            processed = []
+            for i, article in enumerate(articles):
+                llm = result_map.get(i, {})
+                if not llm.get("is_it"):
+                    continue
+                processed.append(
+                    {
+                        **article,
+                        "category": llm.get("category") or _keyword_category(article["title"]),
+                        "title_ja": llm.get("title_ja") or "",
+                        "summary_ja": llm.get("summary_ja") or "",
+                        "llm_ok": True,
+                    }
+                )
+
+            logger.info("Gemini処理完了: %d件 → IT関連 %d件", len(articles), len(processed))
+            return processed
+
+        except Exception as e:
+            last_error = e
+            err_str = str(e)
+            is_rate_limit = any(
+                kw in err_str for kw in ("429", "RESOURCE_EXHAUSTED", "quota", "Too Many Requests")
+            )
+            if is_rate_limit and attempt < len(_RETRY_DELAYS):
+                logger.warning("Gemini レート制限エラー: %s", err_str[:120])
+                continue
+            # リトライ不要なエラー or 全リトライ消費
+            break
+
+    logger.error("Gemini処理失敗（全リトライ消費）: %s。フォールバックを使用します。", last_error)
+    return _fallback_process(articles, rate_limited=True)
 
 
 def group_by_category(articles: list[dict]) -> dict[str, list[dict]]:

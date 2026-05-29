@@ -37,6 +37,10 @@ body{font-family:-apple-system,'Helvetica Neue','Noto Sans JP',sans-serif;backgr
 .badge{background:#f1f5f9;color:#475569;padding:1px 7px;border-radius:10px;font-size:.72rem;white-space:nowrap}
 .score-b{background:#dbeafe;color:#1d4ed8;padding:1px 7px;border-radius:10px;font-size:.72rem;font-weight:700;white-space:nowrap}
 .ft{text-align:center;font-size:.72rem;color:#94a3b8;padding:18px 0 10px;border-top:1px solid #e2e8f0;margin-top:6px}
+/* Rate limit warning */
+.rate-warn{background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:.8rem;color:#92400e;display:flex;align-items:flex-start;gap:8px}
+.art-ja-na{color:#94a3b8;font-style:italic}
+.art-summary-na{color:#f59e0b;font-style:italic}
 /* Legend */
 .legend{border:1px solid #e2e8f0;border-radius:6px;margin-top:8px;margin-bottom:16px;background:#fff;overflow:hidden}
 .legend summary{cursor:pointer;padding:9px 14px;font-size:.8rem;font-weight:600;color:#475569;user-select:none;list-style:none;display:flex;align-items:center;gap:6px}
@@ -88,8 +92,20 @@ def _article_html(article: dict, rank: int, border_color: str) -> str:
     hn = article.get("score_hn", 0)
     source = _e(article.get("source", ""))
 
-    title_ja_html = f'<span class="art-ja">({title_ja})</span>' if title_ja else ""
-    summary_html = f'<span class="art-summary">📝 {summary_ja}</span>' if summary_ja else ""
+    llm_ok = article.get("llm_ok", True)
+    if title_ja:
+        title_ja_html = f'<span class="art-ja">({title_ja})</span>'
+    elif not llm_ok:
+        title_ja_html = '<span class="art-ja art-ja-na">（⚠️ APIレート制限のため和訳取得不可）</span>'
+    else:
+        title_ja_html = ""
+
+    if summary_ja:
+        summary_html = f'<span class="art-summary">📝 {summary_ja}</span>'
+    elif not llm_ok:
+        summary_html = '<span class="art-summary-na">📝 APIレート制限のため要約を取得できませんでした</span>'
+    else:
+        summary_html = ""
     hn_html = f'<span class="badge">HN:{hn:.0f}</span>' if hn > 0 else ""
 
     return f"""
@@ -137,6 +153,24 @@ def generate_html_newspaper(
     date_ja = date.strftime("%Y年%m月%d日")
     generated_at = date.strftime("%Y-%m-%d %H:%M")
     total_it = sum(len(v) for v in articles_by_category.values())
+
+    # レート制限の確認（いずれかの記事で llm_ok=False なら警告）
+    all_articles = [a for arts in articles_by_category.values() for a in arts]
+    rate_limited = any(not a.get("llm_ok", True) for a in all_articles)
+    fail_reason = next(
+        (a.get("llm_fail_reason", "") for a in all_articles if not a.get("llm_ok", True)), ""
+    )
+
+    rate_warn_html = ""
+    if rate_limited:
+        rate_warn_html = f"""
+  <div class="rate-warn">
+    <span>⚠️</span>
+    <span>
+      <b>Gemini API {fail_reason}のため、和訳・要約を取得できませんでした。</b><br>
+      時間をおいて再実行すると翻訳・要約が表示されます。記事リンクは正常です。
+    </span>
+  </div>"""
 
     stats_html = f"""
   <div class="stats">
@@ -206,6 +240,7 @@ def generate_html_newspaper(
     <div class="hd-date">{date_ja}</div>
   </div>
   {stats_html}
+  {rate_warn_html}
   {categories_html}
   {legend_html}
   <div class="ft">

@@ -29,6 +29,10 @@ body{font-family:-apple-system,'Helvetica Neue','Noto Sans JP',sans-serif;backgr
 .badge{background:#f1f5f9;color:#475569;padding:1px 7px;border-radius:10px;font-size:.72rem;white-space:nowrap}
 .score-b{background:#dbeafe;color:#1d4ed8;padding:1px 7px;border-radius:10px;font-size:.72rem;font-weight:700;white-space:nowrap}
 .ft{text-align:center;font-size:.72rem;color:#94a3b8;padding:18px 0 10px;border-top:1px solid #e2e8f0;margin-top:6px}
+/* Rate limit warning */
+.rate-warn{background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:.8rem;color:#92400e;display:flex;align-items:flex-start;gap:8px}
+.art-ja-na{color:#94a3b8;font-style:italic}
+.art-summary-na{color:#f59e0b;font-style:italic}
 /* Legend */
 .legend{border:1px solid #e2e8f0;border-radius:6px;margin-top:8px;margin-bottom:16px;background:#fff;overflow:hidden}
 .legend summary{cursor:pointer;padding:9px 14px;font-size:.8rem;font-weight:600;color:#475569;user-select:none;list-style:none;display:flex;align-items:center;gap:6px}
@@ -62,10 +66,11 @@ details[open].legend summary::after{content:"▾"}
   </div>
   
   <div class="stats">
-    <span>🗓️ 2026-05-29 08:06 JST</span>
+    <span>🗓️ 2026-05-29 17:27 JST</span>
     <span>📰 取得 88件 → IT関連 15件</span>
     <span>📊 最高関心度 25/100</span>
   </div>
+  
   
   <div class="sec">
     <div class="sec-hd" style="background:#4f46e5">🤖 AI・機械学習</div>
@@ -73,24 +78,11 @@ details[open].legend summary::after{content:"▾"}
     <div class="art" style="border-left-color:#818cf8">
       <div class="art-row1">
         <span class="art-num">1.</span>
-        <a href="https://sfstandard.com/2026/05/28/sf-startup-secretly-testing-robots-airbnbs-trashing-lawsuit-claims/" class="art-en" target="_blank" rel="noopener">SF startup is testing robots in Airbnbs, and trashing them, lawsuit claims</a>
-        
-      </div>
-      <div class="art-row2">
-        
-        <span class="score-b">関心度 14/100 ★☆☆☆☆</span>
-        <span class="badge">HN:39</span>
-        <span class="badge">Hacker News</span>
-      </div>
-    </div>
-    <div class="art" style="border-left-color:#818cf8">
-      <div class="art-row1">
-        <span class="art-num">2.</span>
         <a href="https://minimaxir.com/2026/05/openrouter-hy3/" class="art-en" target="_blank" rel="noopener">The mysterious Hy3 LLM is topping OpenRouter Model Rankings by a large margin</a>
-        
+        <span class="art-ja">(謎のHy3 LLMがOpenRouterで首位)</span>
       </div>
       <div class="art-row2">
-        
+        <span class="art-summary">📝 謎のHy3大規模言語モデルがOpenRouterのランキングで上位を占めている。</span>
         <span class="score-b">関心度 5/100 ★☆☆☆☆</span>
         <span class="badge">HN:14</span>
         <span class="badge">Hacker News</span>
@@ -98,12 +90,25 @@ details[open].legend summary::after{content:"▾"}
     </div>
     <div class="art" style="border-left-color:#818cf8">
       <div class="art-row1">
-        <span class="art-num">3.</span>
-        <a href="https://www.ft.com/content/b1a62a7f-6df5-4c90-94ce-64ce9c9961b6" class="art-en" target="_blank" rel="noopener">Amazon scraps AI leaderboard to stop workers chasing usage scores</a>
-        
+        <span class="art-num">2.</span>
+        <a href="https://buildingbetter.tech/p/i-read-the-claude-code-source-code" class="art-en" target="_blank" rel="noopener">Claude Code – Everything You Can Configure That the Docs Don&#x27;t Tell You</a>
+        <span class="art-ja">(Claude Codeの設定裏技を公開)</span>
       </div>
       <div class="art-row2">
-        
+        <span class="art-summary">📝 Claude Codeの文書にない設定方法が公開された。</span>
+        <span class="score-b">関心度 4/100 ★☆☆☆☆</span>
+        <span class="badge">HN:12</span>
+        <span class="badge">Hacker News</span>
+      </div>
+    </div>
+    <div class="art" style="border-left-color:#818cf8">
+      <div class="art-row1">
+        <span class="art-num">3.</span>
+        <a href="https://www.ft.com/content/b1a62a7f-6df5-4c90-94ce-64ce9c9961b6" class="art-en" target="_blank" rel="noopener">Amazon scraps AI leaderboard to stop workers chasing usage scores</a>
+        <span class="art-ja">(Amazon、従業員のAI利用スコア制度を廃止)</span>
+      </div>
+      <div class="art-row2">
+        <span class="art-summary">📝 Amazonは従業員のAI利用ランキングを廃止した。</span>
         <span class="score-b">関心度 4/100 ★☆☆☆☆</span>
         <span class="badge">HN:11</span>
         <span class="badge">Hacker News</span>
@@ -112,11 +117,11 @@ details[open].legend summary::after{content:"▾"}
     <div class="art" style="border-left-color:#818cf8">
       <div class="art-row1">
         <span class="art-num">4.</span>
-        <a href="https://buildingbetter.tech/p/i-read-the-claude-code-source-code" class="art-en" target="_blank" rel="noopener">Claude Code – Everything You Can Configure That the Docs Don&#x27;t Tell You</a>
-        
+        <a href="https://finance.yahoo.com/sectors/technology/articles/microsoft-data-suggests-using-ai-225900743.html" class="art-en" target="_blank" rel="noopener">Microsoft data suggests using AI is more expensive than hiring people</a>
+        <span class="art-ja">(AI利用は人件費より高額とMSデータ示唆)</span>
       </div>
       <div class="art-row2">
-        
+        <span class="art-summary">📝 MicrosoftのデータはAI利用が人件費より高価だと示唆した。</span>
         <span class="score-b">関心度 4/100 ★☆☆☆☆</span>
         <span class="badge">HN:10</span>
         <span class="badge">Hacker News</span>
@@ -125,52 +130,13 @@ details[open].legend summary::after{content:"▾"}
     <div class="art" style="border-left-color:#818cf8">
       <div class="art-row1">
         <span class="art-num">5.</span>
-        <a href="https://finance.yahoo.com/sectors/technology/articles/microsoft-data-suggests-using-ai-225900743.html" class="art-en" target="_blank" rel="noopener">Microsoft data suggests using AI is more expensive than hiring people</a>
-        
-      </div>
-      <div class="art-row2">
-        
-        <span class="score-b">関心度 3/100 ★☆☆☆☆</span>
-        <span class="badge">HN:10</span>
-        <span class="badge">Hacker News</span>
-      </div>
-    </div>
-    <div class="art" style="border-left-color:#818cf8">
-      <div class="art-row1">
-        <span class="art-num">6.</span>
         <a href="https://www.zot.sh" class="art-en" target="_blank" rel="noopener">Zot now supports Claude Opus 4.8</a>
-        
+        <span class="art-ja">(ZotがClaude Opus 4.8をサポート開始)</span>
       </div>
       <div class="art-row2">
-        
+        <span class="art-summary">📝 ZotがAIモデルのClaude Opus 4.8に対応した。</span>
         <span class="score-b">関心度 2/100 ★☆☆☆☆</span>
         <span class="badge">HN:5</span>
-        <span class="badge">Hacker News</span>
-      </div>
-    </div>
-    <div class="art" style="border-left-color:#818cf8">
-      <div class="art-row1">
-        <span class="art-num">7.</span>
-        <a href="https://arstechnica.com/security/2026/05/fed-up-with-vibe-coders-dev-sneaks-data-nuking-prompt-injection-into-their-code/" class="art-en" target="_blank" rel="noopener">Undisclosed addition in jqwik instructed AI coding agents to delete app output</a>
-        
-      </div>
-      <div class="art-row2">
-        
-        <span class="score-b">関心度 2/100 ★☆☆☆☆</span>
-        <span class="badge">HN:4</span>
-        <span class="badge">Hacker News</span>
-      </div>
-    </div>
-    <div class="art" style="border-left-color:#818cf8">
-      <div class="art-row1">
-        <span class="art-num">8.</span>
-        <a href="https://github.com/RasmusGodske/claude-hook-utils" class="art-en" target="_blank" rel="noopener">Python utility package for building Claude Code hooks</a>
-        
-      </div>
-      <div class="art-row2">
-        
-        <span class="score-b">関心度 1/100 ★☆☆☆☆</span>
-        <span class="badge">HN:3</span>
         <span class="badge">Hacker News</span>
       </div>
     </div></div>
@@ -180,14 +146,40 @@ details[open].legend summary::after{content:"▾"}
     <div class="arts">
     <div class="art" style="border-left-color:#f87171">
       <div class="art-row1">
-        <span class="art-num">9.</span>
+        <span class="art-num">6.</span>
         <a href="https://www.tomshardware.com/tech-industry/cyber-security/microsofts-github-bans-security-researcher-who-posted-zero-day-windows-exploits-because-company-ruined-their-life-expert-claims-action-is-vindictive-and-promises-further-retaliation" class="art-en" target="_blank" rel="noopener">GitHub bans security researcher who posted zero-day Windows exploits</a>
-        
+        <span class="art-ja">(GitHubがゼロデイWindows exploit投稿研究者をBAN)</span>
       </div>
       <div class="art-row2">
-        
+        <span class="art-summary">📝 GitHubがゼロデイ脆弱性公開の研究者を禁止した。</span>
         <span class="score-b">関心度 25/100 ★★☆☆☆</span>
-        <span class="badge">HN:71</span>
+        <span class="badge">HN:72</span>
+        <span class="badge">Hacker News</span>
+      </div>
+    </div>
+    <div class="art" style="border-left-color:#f87171">
+      <div class="art-row1">
+        <span class="art-num">7.</span>
+        <a href="https://www.bbc.com/future/article/20260513-your-car-is-spying-on-you-its-about-to-get-worse" class="art-en" target="_blank" rel="noopener">Cars collect a startling amount of data about you</a>
+        <span class="art-ja">(車が個人データを驚くほど収集している)</span>
+      </div>
+      <div class="art-row2">
+        <span class="art-summary">📝 自動車が利用者の個人情報を大量に収集している。</span>
+        <span class="score-b">関心度 21/100 ★★☆☆☆</span>
+        <span class="badge">HN:60</span>
+        <span class="badge">Hacker News</span>
+      </div>
+    </div>
+    <div class="art" style="border-left-color:#f87171">
+      <div class="art-row1">
+        <span class="art-num">8.</span>
+        <a href="https://www.eff.org/deeplinks/2026/05/more-license-plate-reader-mission-creep-school-residency-verification-background" class="art-en" target="_blank" rel="noopener">More License Plate Reader Mission Creep: School Residency Verification, More</a>
+        <span class="art-ja">(ナンバープレートリーダー、用途が拡大)</span>
+      </div>
+      <div class="art-row2">
+        <span class="art-summary">📝 ナンバープレート読取装置の利用範囲が拡大している。</span>
+        <span class="score-b">関心度 2/100 ★☆☆☆☆</span>
+        <span class="badge">HN:6</span>
         <span class="badge">Hacker News</span>
       </div>
     </div></div>
@@ -197,40 +189,66 @@ details[open].legend summary::after{content:"▾"}
     <div class="arts">
     <div class="art" style="border-left-color:#34d399">
       <div class="art-row1">
-        <span class="art-num">10.</span>
-        <a href="https://thewalrus.ca/the-internet-has-become-too-american-to-trust/" class="art-en" target="_blank" rel="noopener">The internet has become too American to trust</a>
-        
+        <span class="art-num">9.</span>
+        <a href="https://github.com/robinostlund/homeassistant-volkswagencarnet/issues/967" class="art-en" target="_blank" rel="noopener">Volkswagen blocks Home Assistant by requiring client assertion</a>
+        <span class="art-ja">(フォルクスワーゲン、Home Assistantをブロック)</span>
       </div>
       <div class="art-row2">
-        
-        <span class="score-b">関心度 11/100 ★☆☆☆☆</span>
-        <span class="badge">HN:3</span>
+        <span class="art-summary">📝 VWがクライアント認証を要求しHome Assistantとの連携を阻止。</span>
+        <span class="score-b">関心度 5/100 ★☆☆☆☆</span>
+        <span class="badge">HN:15</span>
+        <span class="badge">Hacker News</span>
+      </div>
+    </div>
+    <div class="art" style="border-left-color:#34d399">
+      <div class="art-row1">
+        <span class="art-num">10.</span>
+        <a href="https://discourse.nixos.org/t/garnix-is-shutting-down-not-oc/77895" class="art-en" target="_blank" rel="noopener">Garnix (A Nix CI) is shutting down</a>
+        <span class="art-ja">(Nix CIのGarnixがサービス終了へ)</span>
+      </div>
+      <div class="art-row2">
+        <span class="art-summary">📝 Nix CIサービス「Garnix」が閉鎖されることになった。</span>
+        <span class="score-b">関心度 4/100 ★☆☆☆☆</span>
+        <span class="badge">HN:12</span>
         <span class="badge">Hacker News</span>
       </div>
     </div>
     <div class="art" style="border-left-color:#34d399">
       <div class="art-row1">
         <span class="art-num">11.</span>
-        <a href="https://bsky.app/profile/chadwhitacre.com/post/3mmvzlutrvk2g" class="art-en" target="_blank" rel="noopener">I&#x27;m &quot;Retiring&quot; from Tech – Chad Whitacre, Head of Open Source, Sentry.io</a>
-        
+        <a href="https://blogs.gentoo.org/mgorny/2026/05/28/why-gentoo/" class="art-en" target="_blank" rel="noopener">Why Gentoo?</a>
+        <span class="art-ja">(なぜGentooを使うのか？)</span>
       </div>
       <div class="art-row2">
-        
-        <span class="score-b">関心度 2/100 ★☆☆☆☆</span>
-        <span class="badge">HN:7</span>
+        <span class="art-summary">📝 Gentoo Linuxを使う理由について考察された。</span>
+        <span class="score-b">関心度 4/100 ★☆☆☆☆</span>
+        <span class="badge">HN:11</span>
         <span class="badge">Hacker News</span>
       </div>
     </div>
     <div class="art" style="border-left-color:#34d399">
       <div class="art-row1">
         <span class="art-num">12.</span>
-        <a href="https://asterinas.github.io/" class="art-en" target="_blank" rel="noopener">Asterinas – Forge the Future of Rust OSes</a>
-        
+        <a href="https://www.gnu.org/gwm/libredocxml/x53.html" class="art-en" target="_blank" rel="noopener">Copyright vs. Copyleft (2007)</a>
+        <span class="art-ja">(著作権とコピーレフトを比較 (2007年))</span>
       </div>
       <div class="art-row2">
-        
-        <span class="score-b">関心度 1/100 ★☆☆☆☆</span>
-        <span class="badge">HN:2</span>
+        <span class="art-summary">📝 著作権とコピーレフトの違いについて解説された。</span>
+        <span class="score-b">関心度 2/100 ★☆☆☆☆</span>
+        <span class="badge">HN:6</span>
+        <span class="badge">Hacker News</span>
+      </div>
+    </div>
+    <div class="art" style="border-left-color:#34d399">
+      <div class="art-row1">
+        <span class="art-num">13.</span>
+        <a href="https://arstechnica.com/security/2026/05/fed-up-with-vibe-coders-dev-sneaks-data-nuking-prompt-injection-into-their-code/" class="art-en" target="_blank" rel="noopener">Undisclosed addition in jqwik instructed AI coding agents to delete app output</a>
+        <span class="art-ja">(jqwikの隠れた機能がAIにアプリ出力削除を指示)</span>
+      </div>
+      <div class="art-row2">
+        <span class="art-summary">📝 jqwikの未公表機能がAIコーディングエージェントにアプリ出力削除を指示していた。</span>
+        <span class="score-b">関心度 2/100 ★☆☆☆☆</span>
+        <span class="badge">HN:5</span>
         <span class="badge">Hacker News</span>
       </div>
     </div></div>
@@ -240,40 +258,27 @@ details[open].legend summary::after{content:"▾"}
     <div class="arts">
     <div class="art" style="border-left-color:#fbbf24">
       <div class="art-row1">
-        <span class="art-num">13.</span>
-        <a href="https://techcrunch.com/2026/05/28/the-internet-is-being-rebuilt-for-machines/" class="art-en" target="_blank" rel="noopener">The internet is being rebuilt for machines</a>
-        
-      </div>
-      <div class="art-row2">
-        
-        <span class="score-b">関心度 12/100 ★☆☆☆☆</span>
-        
-        <span class="badge">TechCrunch</span>
-      </div>
-    </div>
-    <div class="art" style="border-left-color:#fbbf24">
-      <div class="art-row1">
         <span class="art-num">14.</span>
-        <a href="https://techcrunch.com/2026/05/28/how-to-apply-to-startup-battlefield-2026-what-you-need-ahead-of-the-june-8-deadline/" class="art-en" target="_blank" rel="noopener">How to apply to Startup Battlefield 2026, what you need ahead of the June 8 deadline</a>
-        
+        <a href="https://sfstandard.com/2026/05/28/sf-startup-secretly-testing-robots-airbnbs-trashing-lawsuit-claims/" class="art-en" target="_blank" rel="noopener">SF startup is testing robots in Airbnbs, and trashing them, lawsuit claims</a>
+        <span class="art-ja">(SFスタートアップがAirbnbでロボットテスト、訴訟に)</span>
       </div>
       <div class="art-row2">
-        
-        <span class="score-b">関心度 8/100 ★☆☆☆☆</span>
-        
-        <span class="badge">TechCrunch</span>
+        <span class="art-summary">📝 SFのスタートアップがAirbnbでロボットをテストし、損傷させた疑いで訴訟。</span>
+        <span class="score-b">関心度 14/100 ★☆☆☆☆</span>
+        <span class="badge">HN:40</span>
+        <span class="badge">Hacker News</span>
       </div>
     </div>
     <div class="art" style="border-left-color:#fbbf24">
       <div class="art-row1">
         <span class="art-num">15.</span>
-        <a href="https://nesbitt.io/2026/05/28/protestware-for-coding-agents.html" class="art-en" target="_blank" rel="noopener">Protestware for Coding Agents</a>
-        
+        <a href="https://bsky.app/profile/chadwhitacre.com/post/3mmvzlutrvk2g" class="art-en" target="_blank" rel="noopener">I&#x27;m &quot;Retiring&quot; from Tech – Chad Whitacre, Head of Open Source, Sentry.io</a>
+        <span class="art-ja">(Sentry.ioのオープンソース責任者が退職へ)</span>
       </div>
       <div class="art-row2">
-        
-        <span class="score-b">関心度 3/100 ★☆☆☆☆</span>
-        <span class="badge">HN:8</span>
+        <span class="art-summary">📝 Sentry.ioのオープンソース責任者チャド・ウィタカー氏が退職。</span>
+        <span class="score-b">関心度 2/100 ★☆☆☆☆</span>
+        <span class="badge">HN:7</span>
         <span class="badge">Hacker News</span>
       </div>
     </div></div>

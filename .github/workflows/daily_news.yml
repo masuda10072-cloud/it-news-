@@ -50,5 +50,6 @@ jobs:
           # 変更がない場合はコミットしない
           git diff --cached --quiet && echo "変更なし。コミットをスキップ。" || (
             git commit -m "📰 IT ニュース新聞 $(date +'%Y-%m-%d')" &&
+            git pull --rebase origin main &&
             git push
           )
